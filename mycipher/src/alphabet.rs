@@ -7,8 +7,7 @@ pub struct Alphabet {
 
 impl Alphabet {
     pub fn index(&self, c: char) -> usize {
-        let c0 = self.alphabet[0];
-        c as usize - c0 as usize
+        self.alphabet.iter().position(|it| *it == c).unwrap()
     }
 
     pub fn len(&self) -> usize {

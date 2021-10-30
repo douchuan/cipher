@@ -1,9 +1,9 @@
+use mycipher::util;
 /// Count frequency of char & word
 use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap};
 use std::env;
 use std::fmt::{Display, Formatter};
-use std::io::Read;
 
 const TOP: usize = 10;
 
@@ -20,7 +20,7 @@ fn main() {
     let mut args = env::args();
     if args.len() > 1 {
         if let Some(file) = args.next_back() {
-            let content = read_contents(file.as_str()).unwrap();
+            let content = util::read_contents(file.as_str()).unwrap();
 
             match count_letters(content.as_str()) {
                 Ok(c) => println!("chars: {}", c),
@@ -74,13 +74,6 @@ fn count_words(content: &str) -> std::io::Result<Count<&str>> {
     find_top(&word2count, &mut count);
 
     Ok(count)
-}
-
-fn read_contents(file: &str) -> std::io::Result<String> {
-    let mut file = std::fs::File::open(file)?;
-    let mut s = String::new();
-    file.read_to_string(&mut s)?;
-    Ok(s)
 }
 
 fn find_top<T>(map: &HashMap<T, usize>, count: &mut Count<T>)
