@@ -5,3 +5,10 @@ version = 3
 [[package]]
 name = "examples"
 version = "0.0.0"
+dependencies = [
+ "mycipher",
+]
+
+[[package]]
+name = "mycipher"
+version = "0.1.0"

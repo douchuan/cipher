@@ -7,9 +7,8 @@ edition = "2018"
 # If you copy one of the examples into a new project, you should be using
 # [dependencies] instead.
 [dev-dependencies]
-
+mycipher = { version = "0.1.0", path="../mycipher"}
 
 [[example]]
 name = "count-frequency"
 path = "count-frequency.rs"
-
