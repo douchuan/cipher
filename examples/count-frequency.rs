@@ -4,7 +4,7 @@ use std::env;
 use std::fmt::{Display, Formatter};
 use std::io::Read;
 
-const TOP: usize = 10;
+const TOP: usize = 26;
 
 #[derive(Debug, Default)]
 struct Count<T> {
@@ -39,7 +39,7 @@ fn count_letters(content: &str) -> std::io::Result<Count<char>> {
     let mut count = Count::default();
     let mut char2count = HashMap::new();
     for c in content.chars() {
-        if !c.is_whitespace() {
+        if c.is_alphabetic() {
             count.sum += 1;
             let n = match char2count.get(&c) {
                 Some(n) => n + 1,

@@ -2,7 +2,7 @@ use crate::alphabet::Alphabet;
 use crate::math;
 
 pub fn encrypt(x: &[char], k: i32) -> Vec<char> {
-    let alphabet = Alphabet;
+    let alphabet = Alphabet::default();
     x.iter()
         .map(|c| {
             let v = alphabet.index(*c) as i32 + k;
@@ -13,7 +13,7 @@ pub fn encrypt(x: &[char], k: i32) -> Vec<char> {
 }
 
 pub fn decrypt(y: &[char], k: i32) -> Vec<char> {
-    let alphabet = Alphabet;
+    let alphabet = Alphabet::default();
     y.iter()
         .map(|c| {
             let v = alphabet.index(*c) as i32 - k;

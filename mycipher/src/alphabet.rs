@@ -1,20 +1,32 @@
-const ALPHABET: [char; 26] = [
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
-    'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-];
-
-pub struct Alphabet;
+pub struct Alphabet {
+    alphabet: Vec<char>,
+}
 
 impl Alphabet {
     pub fn index(&self, c: char) -> usize {
-        c as usize - 'A' as usize
+        let c0 = self.alphabet[0];
+        c as usize - c0 as usize
     }
 
     pub fn len(&self) -> usize {
-        ALPHABET.len()
+        self.alphabet.len()
     }
 
     pub fn value(&self, i: usize) -> char {
-        ALPHABET[i]
+        self.alphabet[i]
+    }
+}
+
+impl Default for Alphabet {
+    fn default() -> Self {
+        Self {
+            alphabet: "ABCDEFGHIJKLMNOPQRSTUVWXYZ".chars().collect(),
+        }
+    }
+}
+
+impl From<Vec<char>> for Alphabet {
+    fn from(alphabet: Vec<char>) -> Self {
+        Self { alphabet }
     }
 }
