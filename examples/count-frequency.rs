@@ -1,10 +1,11 @@
+/// Count frequency of char & word
 use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap};
 use std::env;
 use std::fmt::{Display, Formatter};
 use std::io::Read;
 
-const TOP: usize = 26;
+const TOP: usize = 10;
 
 #[derive(Debug, Default)]
 struct Count<T> {
