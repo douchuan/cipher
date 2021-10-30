@@ -36,10 +36,12 @@ impl From<Vec<char>> for Alphabet {
 // build alphabet with frequency
 impl From<&str> for Alphabet {
     fn from(content: &str) -> Self {
+        let content: Vec<char> = content.chars().map(|c| c.to_ascii_lowercase()).collect();
+
         let mut char2count = HashMap::new();
 
         // count char
-        for c in content.chars() {
+        for c in content {
             if c.is_alphabetic() {
                 let n = match char2count.get(&c) {
                     Some(n) => n + 1,

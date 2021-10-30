@@ -11,6 +11,7 @@ fn main() {
     let content_model = util::read_contents(f_model.as_str()).expect("invalid file content");
     let content_encrypt = util::read_contents(f_encrypt.as_str()).expect("invalid file content");
 
+    // frequency alphabet
     let model_alphabet = Alphabet::from(content_model.as_str());
     let encrypt_alphabet = Alphabet::from(content_encrypt.as_str());
 

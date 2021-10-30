@@ -4,3 +4,6 @@ frequency:
 
 decrypt1:
 	cargo run --example decrypt-with-freq res/1514-0.txt res/problem1.1
+
+test:
+	cargo test

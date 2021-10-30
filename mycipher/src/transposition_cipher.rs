@@ -40,8 +40,3 @@ fn t_decrypt() {
     let y: Vec<char> = y.chars().collect();
     assert_eq!(decrypt(&y, 17), x);
 }
-
-#[test]
-fn t_reminder() {
-    assert_eq!(math::reminder(-7, 26), 19);
-}
