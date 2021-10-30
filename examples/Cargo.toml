@@ -12,3 +12,7 @@ mycipher = { version = "0.1.0", path="../mycipher"}
 [[example]]
 name = "count-frequency"
 path = "count-frequency.rs"
+
+[[example]]
+name = "decrypt-with-freq"
+path = "decrypt-with-freq.rs"
