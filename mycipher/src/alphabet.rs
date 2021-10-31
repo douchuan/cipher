@@ -50,29 +50,18 @@ impl From<&[FreqChar]> for Alphabet {
 // build alphabet with frequency
 impl From<&str> for Alphabet {
     fn from(content: &str) -> Self {
-        let mut char2count = HashMap::new();
+        let mut freq = HashMap::new();
 
-        // build char2count map
+        // build frequency table
         for c in content.chars() {
             if c.is_alphabetic() {
-                let n = match char2count.get(&c) {
-                    Some(n) => n + 1,
-                    None => 0,
-                };
-                char2count.insert(c, n);
+                let counter = freq.entry(c).or_insert(0.0);
+                *counter += 1.0;
             }
         }
 
-        // sort by count, high -> low
-        let mut vec = Vec::with_capacity(char2count.len());
-        for v in char2count {
-            vec.push(v);
-        }
-        vec.sort_by(|a, b| a.1.cmp(&b.1));
-        vec.reverse();
-
-        let alphabet = vec.iter().map(|v| v.0).collect();
-        Self { alphabet }
+        let freq_chars: Vec<FreqChar> = freq.iter().map(|(&c, &f)| (c, f)).collect();
+        Alphabet::from(freq_chars.as_slice())
     }
 }
 
