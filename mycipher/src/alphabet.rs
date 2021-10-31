@@ -1,6 +1,8 @@
 use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap};
 
+pub type FreqChar = (char, f32);
+
 pub struct Alphabet {
     alphabet: Vec<char>,
 }
@@ -29,6 +31,19 @@ impl Default for Alphabet {
 
 impl From<Vec<char>> for Alphabet {
     fn from(alphabet: Vec<char>) -> Self {
+        Self { alphabet }
+    }
+}
+
+impl From<&[FreqChar]> for Alphabet {
+    fn from(chars: &[FreqChar]) -> Self {
+        // sort chars Hi freq -> Low freq
+        let mut chars = chars.to_vec();
+        chars.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap());
+        let mut alphabet = Vec::with_capacity(chars.len());
+        for it in chars.iter().rev() {
+            alphabet.push(it.0);
+        }
         Self { alphabet }
     }
 }
