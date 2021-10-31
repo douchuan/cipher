@@ -1,5 +1,6 @@
-use mycipher::alphabet::{Alphabet, FreqChar};
+use mycipher::alphabet::Alphabet;
 use mycipher::util;
+use std::collections::HashSet;
 use std::env;
 
 fn main() {
@@ -57,5 +58,8 @@ fn create_alphabet() -> Alphabet {
         ('Y', 0.0197),
         ('Z', 0.0007),
     ];
+    assert_eq!(26, freq_chars.len());
+    let set: HashSet<char> = freq_chars.iter().map(|v| v.0).collect();
+    assert_eq!(26, set.len());
     Alphabet::from(freq_chars.as_slice())
 }

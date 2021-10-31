@@ -1,5 +1,4 @@
-use std::cmp::Ordering;
-use std::collections::{BinaryHeap, HashMap};
+use std::collections::HashMap;
 
 pub type FreqChar = (char, f32);
 
@@ -51,12 +50,10 @@ impl From<&[FreqChar]> for Alphabet {
 // build alphabet with frequency
 impl From<&str> for Alphabet {
     fn from(content: &str) -> Self {
-        let content: Vec<char> = content.chars().map(|c| c.to_ascii_lowercase()).collect();
-
         let mut char2count = HashMap::new();
 
-        // count char
-        for c in content {
+        // build char2count map
+        for c in content.chars() {
             if c.is_alphabetic() {
                 let n = match char2count.get(&c) {
                     Some(n) => n + 1,
@@ -66,44 +63,37 @@ impl From<&str> for Alphabet {
             }
         }
 
-        // top 26
-        let mut heap = BinaryHeap::new();
-        for (c, n) in char2count {
-            heap.push(CountItem(c, n));
+        // sort by count, high -> low
+        let mut vec = Vec::with_capacity(char2count.len());
+        for v in char2count {
+            vec.push(v);
         }
+        vec.sort_by(|a, b| a.1.cmp(&b.1));
+        vec.reverse();
 
-        let mut alphabet = Vec::with_capacity(26);
-        for _ in 0..26 {
-            match heap.pop() {
-                Some(it) => {
-                    alphabet.push(it.0);
-                }
-                _ => break,
-            }
-        }
-
+        let alphabet = vec.iter().map(|v| v.0).collect();
         Self { alphabet }
     }
 }
 
-// (item, count)
-struct CountItem<T>(T, usize);
-impl<T> Eq for CountItem<T> {}
-
-impl<T> PartialEq<Self> for CountItem<T> {
-    fn eq(&self, other: &Self) -> bool {
-        self.1 == other.1
+#[test]
+fn t_alphabet_frequency() {
+    let mut content = String::new();
+    let mut count = 1;
+    for c in "ABCDEFGHIJKLMNOPQRSTUVWXYZ".chars() {
+        // repeat char count times
+        let chars = String::from(c).repeat(count);
+        content.push_str(&chars);
+        count += 1;
     }
+    let revers_standard: Vec<char> = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".chars().rev().collect();
+    let alphabet = Alphabet::from(content.as_str());
+    assert_eq!(revers_standard, alphabet.alphabet)
 }
 
-impl<T> PartialOrd<Self> for CountItem<T> {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.1.cmp(&other.1))
-    }
-}
-
-impl<T> Ord for CountItem<T> {
-    fn cmp(&self, other: &Self) -> Ordering {
-        self.1.cmp(&other.1)
-    }
+#[test]
+fn t_alphabet_char_freq() {
+    let chars_freq = vec![('A', 1.0), ('B', 2.0), ('C', 3.0), ('D', 4.0), ('E', 5.0)];
+    let alphabet = Alphabet::from(chars_freq.as_slice());
+    assert_eq!(vec!['E', 'D', 'C', 'B', 'A'], alphabet.alphabet);
 }
